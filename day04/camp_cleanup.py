@@ -22,15 +22,24 @@ with open("section_pairs.txt", "r") as f:
             fully_contained_pairs += 1
             any_overlap += 1
 
-        # If start of first pair within the second pair
-        elif int(rp_list[0][0]) >= int(rp_list[1][0]) and int(rp_list[0][0]) <= int(
-            rp_list[1][1]
-        ):
-            any_overlap += 1
+        # # If start of first pair within the second pair
+        # elif int(rp_list[0][0]) >= int(rp_list[1][0]) and int(rp_list[0][0]) <= int(
+        #     rp_list[1][1]
+        # ):
+        #     any_overlap += 1
 
-        # If start of second pair within the first pair
-        elif int(rp_list[1][0]) >= int(rp_list[0][0]) and int(rp_list[1][0]) <= int(
-            rp_list[0][1]
+        # # If start of second pair within the first pair
+        # elif int(rp_list[1][0]) >= int(rp_list[0][0]) and int(rp_list[1][0]) <= int(
+        #     rp_list[0][1]
+        # ):
+        #     any_overlap += 1
+
+        # More simple than above:
+        # If start of first pair is after end of second pair, OR
+        # start of second pair is after end of first pair, no overlap
+        elif not (
+            int(rp_list[0][0]) > int(rp_list[1][1])
+            or int(rp_list[1][0]) > int(rp_list[0][1])
         ):
             any_overlap += 1
 
