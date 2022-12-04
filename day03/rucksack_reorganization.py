@@ -1,20 +1,26 @@
+import string
+
 sum_of_priorities = 0
 rucksack_number = 0
 group_rucksack1, group_rucksack2, group_rucksack3 = (set() for _ in range(3))
 sum_of_badges = 0
 
 
-def get_priority(letter: str):
-    # get ascii value of char
-    letter_ord = ord(letter)
+# def get_priority(letter: str):
+#     # get ascii value of char
+#     letter_ord = ord(letter)
 
-    # ascii lowercase starts on 97 and uppercase on 65
-    if letter_ord >= 97:
-        priority = letter_ord - 97 + 1
-    else:
-        priority = letter_ord - 65 + 27
-    return priority
+#     # ascii lowercase starts on 97 and uppercase on 65
+#     if letter_ord >= 97:
+#         priority = letter_ord - 97 + 1
+#     else:
+#         priority = letter_ord - 65 + 27
+#     return priority
 
+# This is clearer...and shorter!
+prio_keys = list(string.ascii_lowercase) + list(string.ascii_uppercase)
+prio_values = list(range(1, 53))
+priorities = dict(zip(prio_keys, prio_values))
 
 with open("rucksack_items_list.txt", "r") as f:
     for line in f.readlines():
@@ -27,7 +33,8 @@ with open("rucksack_items_list.txt", "r") as f:
         # find common item by set intersection
         common_letter = compartment_1.intersection(compartment_2).pop()
 
-        sum_of_priorities += get_priority(common_letter)
+        # sum_of_priorities += get_priority(common_letter)
+        sum_of_priorities += priorities[common_letter]
 
         # keep track of the 3 rucksacks per group
         if rucksack_number % 3 == 0:
@@ -38,7 +45,8 @@ with open("rucksack_items_list.txt", "r") as f:
                 .intersection(group_rucksack3)
                 .pop()
             )
-            sum_of_badges += get_priority(common_badge)
+            # sum_of_badges += get_priority(common_badge)
+            sum_of_badges += priorities[common_badge]
         elif rucksack_number % 2 == 0:
             group_rucksack2 = set(rucksack)
         else:
