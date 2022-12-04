@@ -10,6 +10,7 @@ with open("section_pairs.txt", "r") as f:
             or (C <= B and B <= D)
         ):
             sum_overlapping_pairs += 1
+            # Only needs this calc in above if (indentation is correct.)
             if (A >= C and B <= D) or (C >= A and D <= B):
                 sum_fully_containing_pairs += 1
 
