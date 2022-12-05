@@ -36,9 +36,16 @@ with open("crates_input.txt", "r") as f:
                 do_once = False
 
             move = [int(c) for c in str.split(sline) if c.isdigit()]
+
+            # For Part2, introducing an intermediate_stack, will change the order as needed:
+            intermediate_stack = []
             for _ in range(move[0]):  # quantity
                 crane_lift = software_stacks[move[1] - 1].pop()  # from
-                software_stacks[move[2] - 1].append(crane_lift)  # to
+                # software_stacks[move[2] - 1].append(crane_lift)  # to
+                intermediate_stack.append(crane_lift)
+            while len(intermediate_stack):
+                crane_lift2 = intermediate_stack.pop()
+                software_stacks[move[2] - 1].append(crane_lift2)  # to
 
     # TOP OF EACH STACK
     ans = ""
