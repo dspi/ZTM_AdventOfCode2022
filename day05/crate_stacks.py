@@ -13,19 +13,17 @@ with open("crates_input.txt", "r") as f:
         if sline and sline[0] == "[":
             positions = [c + 1 for (c, e) in enumerate(line) if e == "["]
             crates = [c for c in line if c.isalpha()]
-            crate_positions = dict(zip(positions, crates))  # which way round?
+            crate_positions = dict(zip(positions, crates))
             crates_with_positions.append(crate_positions)
         # stack numbers with positions
-        elif (
-            sline and sline[0] == "1" and stacks_with_positions == []
-        ):  # only calc once
+        elif sline and sline[0] == "1" and stacks_with_positions == []:
             stacks = [int(c) for c in str.split(line) if c.isdigit()]
             positions = [c for (c, e) in enumerate(line) if e.isalnum()]
             stacks_with_positions = dict(zip(positions, stacks))
-        # moves: quantity, from and to
+        # moves:
         elif sline:
 
-            if do_once:
+            if do_once:  # ...just before processing the moves
                 # BUILD STACKS
                 for s in stacks_with_positions:
                     software_stack = []
@@ -38,7 +36,6 @@ with open("crates_input.txt", "r") as f:
                 do_once = False
 
             move = [int(c) for c in str.split(sline) if c.isdigit()]
-
             for _ in range(move[0]):  # quantity
                 crane_lift = software_stacks[move[1] - 1].pop()  # from
                 software_stacks[move[2] - 1].append(crane_lift)  # to
