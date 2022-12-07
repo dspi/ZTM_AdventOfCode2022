@@ -10,6 +10,9 @@ dirs = {"/": {"size": 0, "parent": None}}
 cur_dir = dirs["/"]
 # dir_sizes = {}  # usefull to store all data in a flat dict - Nope...keys may be duplicated.
 
+# using this avoids having to update all ancestors for each inividual file.
+sum_file_size = 0
+
 
 def change_dir(to_dir):
     global cur_dir
@@ -66,13 +69,21 @@ with open("terminal_output.txt", "r") as f:
     for line in f:  # .readlines():
         tokens = line.strip().split()
         if tokens[0] == "$":
+            # calc_dir_size called here because it follows a directory listing
+            #  which creates the sum_file_size
+            calc_dir_size(sum_file_size)
+            sum_file_size = 0
             if tokens[1] == "cd":
                 change_dir(tokens[2])
             elif tokens[1] == "ls":
                 pass
         elif tokens[0] != "dir":
             file_size = int(tokens[0])
-            calc_dir_size(file_size)
+            # calc_dir_size(file_size) #using sum_file_size is more efficient
+            sum_file_size += file_size
+
+# calc_dir_size called here in case the last line was not a $ line
+calc_dir_size(sum_file_size)
 
 # Recursively sum each dir from root
 print(sum_of_dirs_recursive(dirs["/"]))
