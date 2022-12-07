@@ -46,6 +46,22 @@ def sum_of_dirs_recursive(dir):
     return sum
 
 
+def smallest_to_be_deleted_recursive(dir, SPACE_TO_BE_DELETED):
+    if dir["size"] < SPACE_TO_BE_DELETED:
+        return None  # (This only ends one of the recursive branches.)
+
+    smallest_minimum = dir["size"]
+    for subdir in dir:
+        if subdir in ("size", "parent"):
+            continue
+        potential_smallest_minimum = smallest_to_be_deleted_recursive(
+            dir[subdir], SPACE_TO_BE_DELETED
+        )
+        if potential_smallest_minimum and potential_smallest_minimum < smallest_minimum:
+            smallest_minimum = potential_smallest_minimum
+    return smallest_minimum
+
+
 with open("terminal_output.txt", "r") as f:
     for line in f:  # .readlines():
         tokens = line.strip().split()
@@ -65,3 +81,13 @@ print(sum_of_dirs_recursive(dirs["/"]))
 # It can't be a flat dict because there could possibly be duplicate keys.
 # Maybe a different structure is better?
 # print(dirs)
+
+
+# Part2:
+TOTAL_SYSTEM_SPACE = 70_000_000
+SPACE_NEEDED = 30_000_000
+SPACE_USED = dirs["/"]["size"]
+SPACE_TO_BE_DELETED = SPACE_NEEDED - (TOTAL_SYSTEM_SPACE - SPACE_USED)
+
+# Recursively from root, find the smallest directory space to be deleted:
+print(smallest_to_be_deleted_recursive(dirs["/"], SPACE_TO_BE_DELETED))
