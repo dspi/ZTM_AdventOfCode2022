@@ -1,5 +1,5 @@
 # ZTM_AdventOfCode2022
-Zero-to-Mastery Advent of Code 2022
+<a href="https://github.com/zero-to-mastery/Advent-of-Code-2022">Zero-to-Mastery Advent of Code 2022</a>
 
 # Advent of Code 2022
 
