@@ -12,6 +12,7 @@ Advent of Code is an Advent calendar of small programming puzzles for a variety 
 ## Other interesting solutions:
 - https://github.com/wmporter/aoc2022
 - https://github.com/mleiras/advent_of_code_2022
+- https://github.com/HASH-0021/AOC-2022
 - https://github.com/Khaprel/Advent-of-Code-22
 - https://github.com/edwinmejia1021/Advent-of-Code-2022
 - https://github.com/farli4/aoc22
